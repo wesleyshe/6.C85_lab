@@ -24,7 +24,33 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let root = globalThis.document?.documentElement;
   const isExternal = (url) => url.startsWith("http");
   const linkHref = (url) => isExternal(url) ? url : base + url;
-  const isCurrent = (url) => !isExternal(url) && (url === "/" ? $page.url.pathname === `${base}/` || $page.url.pathname === base : $page.url.pathname.startsWith(base + url));
+  const normalizePath = (path) => {
+    if (!path)
+      return "/";
+    let normalized = path.startsWith("/") ? path : `/${path}`;
+    normalized = normalized.replace(/\/index\.html$/, "/");
+    normalized = normalized.replace(/\.html$/, "");
+    normalized = normalized.replace(/\/{2,}/g, "/");
+    if (normalized.length > 1) {
+      normalized = normalized.replace(/\/+$/, "");
+    }
+    return normalized || "/";
+  };
+  const stripBase = (pathname) => {
+    const normalizedBase = normalizePath(base);
+    const normalizedPath = normalizePath(pathname);
+    if (normalizedBase !== "/" && normalizedPath.startsWith(normalizedBase)) {
+      return normalizePath(normalizedPath.slice(normalizedBase.length) || "/");
+    }
+    return normalizedPath;
+  };
+  const isCurrent = (url) => {
+    if (isExternal(url))
+      return false;
+    const currentPath = stripBase($page.url.pathname);
+    const targetPath = normalizePath(url);
+    return targetPath === "/" ? currentPath === "/" : currentPath === targetPath || currentPath.startsWith(`${targetPath}/`);
+  };
   $$result.css.add(css);
   {
     root?.style.setProperty("color-scheme", colorScheme);
