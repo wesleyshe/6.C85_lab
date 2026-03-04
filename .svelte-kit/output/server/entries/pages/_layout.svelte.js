@@ -22,6 +22,7 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let localStorage = globalThis.localStorage ?? {};
   let colorScheme = localStorage.colorScheme ?? "light dark";
   let root = globalThis.document?.documentElement;
+  let currentPath = "/";
   const isExternal = (url) => url.startsWith("http");
   const linkHref = (url) => isExternal(url) ? url : base + url;
   const normalizePath = (path) => {
@@ -44,14 +45,11 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     }
     return normalizedPath;
   };
-  const isCurrent = (url) => {
-    if (isExternal(url))
-      return false;
-    const currentPath = stripBase($page.url.pathname);
-    const targetPath = normalizePath(url);
-    return targetPath === "/" ? currentPath === "/" : currentPath === targetPath || currentPath.startsWith(`${targetPath}/`);
+  const isCurrentPath = (targetPath, currentPath2) => {
+    return targetPath === "/" ? currentPath2 === "/" : currentPath2 === targetPath || currentPath2.startsWith(`${targetPath}/`);
   };
   $$result.css.add(css);
+  currentPath = stripBase($page.url.pathname);
   {
     root?.style.setProperty("color-scheme", colorScheme);
   }
@@ -59,7 +57,10 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$unsubscribe_page();
   return `<label class="color-scheme-switch svelte-kcekg2">Theme:
   <select class="svelte-kcekg2"><option value="light dark" data-svelte-h="svelte-9nlqsf">Automatic</option><option value="light" data-svelte-h="svelte-yop7ea">Light</option><option value="dark" data-svelte-h="svelte-6c4gk6">Dark</option></select></label> <nav class="svelte-kcekg2">${each(pages, (p) => {
-    return `<a${add_attribute("href", linkHref(p.url), 0)}${add_attribute("target", isExternal(p.url) ? "_blank" : null, 0)}${add_attribute("rel", isExternal(p.url) ? "noopener noreferrer" : null, 0)} class="${["svelte-kcekg2", isCurrent(p.url) ? "current" : ""].join(" ").trim()}">${escape(p.title)} </a>`;
+    return `<a${add_attribute("href", linkHref(p.url), 0)}${add_attribute("target", isExternal(p.url) ? "_blank" : null, 0)}${add_attribute("rel", isExternal(p.url) ? "noopener noreferrer" : null, 0)} class="${[
+      "svelte-kcekg2",
+      !isExternal(p.url) && isCurrentPath(normalizePath(p.url), currentPath) ? "current" : ""
+    ].join(" ").trim()}">${escape(p.title)} </a>`;
   })}</nav> ${slots.default ? slots.default({}) : ``}`;
 });
 export {

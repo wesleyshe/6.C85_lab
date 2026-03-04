@@ -13,6 +13,7 @@
   let localStorage = globalThis.localStorage ?? {};
   let colorScheme = localStorage.colorScheme ?? "light dark";
   let root = globalThis.document?.documentElement;
+  let currentPath = "/";
 
   const isExternal = (url) => url.startsWith("http");
   const linkHref = (url) => (isExternal(url) ? url : base + url);
@@ -42,16 +43,13 @@
     return normalizedPath;
   };
 
-  const isCurrent = (url) => {
-    if (isExternal(url)) return false;
-
-    const currentPath = stripBase($page.url.pathname);
-    const targetPath = normalizePath(url);
-
+  const isCurrentPath = (targetPath, currentPath) => {
     return targetPath === "/"
       ? currentPath === "/"
       : currentPath === targetPath || currentPath.startsWith(`${targetPath}/`);
   };
+
+  $: currentPath = stripBase($page.url.pathname);
 
   $: root?.style.setProperty("color-scheme", colorScheme);
   $: localStorage.colorScheme = colorScheme;
@@ -70,7 +68,10 @@
   {#each pages as p}
     <a
       href={linkHref(p.url)}
-      class:current={isCurrent(p.url)}
+      class:current={
+        !isExternal(p.url) &&
+        isCurrentPath(normalizePath(p.url), currentPath)
+      }
       target={isExternal(p.url) ? "_blank" : null}
       rel={isExternal(p.url) ? "noopener noreferrer" : null}
     >
