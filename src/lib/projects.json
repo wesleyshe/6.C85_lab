@@ -1,65 +1,65 @@
 [
   {
-    "title": "Dorm Survival Dashboard",
+    "title": "Nighttime Security Initiative",
     "year": 2018,
     "image": "/image/1.jpg",
-    "description": "A first attempt at tracking sleep, deadlines, and meal timing during my first year.",
-    "story": "I built this when I realized my calendar and my actual life were not the same thing. Seeing weekly patterns made it obvious why some weeks felt impossible. It was my first project where data directly changed how I planned my days."
+    "description": "Provided elite after dark monitoring services for sleepers.",
+    "story": "Provided elite after dark monitoring services for sleepers. Maintained constant bedside presence and reduced monster activity to statistically unmeasurable levels. Successfully increased blanket confidence across all participants."
   },
   {
-    "title": "Campus Event Explorer",
+    "title": "Global Nap Optimization",
     "year": 2019,
     "image": "/image/2.jpg",
-    "description": "An interactive map of talks, workshops, and student events around campus.",
-    "story": "I wanted to stop hearing about great events after they were over. This project taught me how to clean messy location and time fields and make them searchable. The result was simple, but classmates actually used it."
+    "description": "Improved nap performance and comfort delivery across time zones.",
+    "story": "Collaborated with humans across multiple time zones to improve nap performance and comfort delivery. Implemented scalable softness solutions while maintaining a flawless one hundred percent cuddle rate."
   },
   {
-    "title": "Transit Delay Notebook",
+    "title": "Community Morale Program",
     "year": 2020,
     "image": "/image/3.jpg",
-    "description": "A small analysis of recurring delay patterns on my most common commute routes.",
-    "story": "After too many missed connections, I started logging when and where trips failed. The patterns were frustratingly consistent in bad weather and late evenings. This project pushed me to connect personal annoyance with quantitative evidence."
+    "description": "Improved group atmosphere in shared spaces through comfort deployment.",
+    "story": "Deployed to shared spaces to improve group atmosphere and encourage relaxation. Frequently requested for photos, team squeezes, and rapid response comfort during stressful moments."
   },
   {
-    "title": "Neighborhood Rent Watch",
+    "title": "Fruit Program",
     "year": 2021,
     "image": "/image/4.jpg",
-    "description": "A visual timeline of rent increases across neighborhoods I considered living in.",
-    "story": "Housing searches felt random until I graphed asking prices over time. The chart made tradeoffs clear and helped me compare neighborhoods beyond one-off listings. It also made affordability feel like a structural issue, not a personal failure."
+    "description": "Led a high-level working group on strawberries and laptop mysteries.",
+    "story": "Convened a distinguished working group to address critical matters such as strawberry distribution and the mysterious presence of a laptop. Discussions were thorough, expressions remained grave, and while no formal resolutions were reached, morale improved and the snacks fulfilled their destiny."
   },
   {
-    "title": "A1: Data, Visualization, and Housing",
+    "title": "Breakfast Program",
     "year": 2022,
     "image": "/image/5.jpg",
-    "description": "Course project exploring relationships between housing indicators and community outcomes.",
-    "story": "This assignment was where I started writing with data instead of just plotting it. I learned that selecting a visual form is an argument, not decoration. The feedback on this work changed how I think about audience and clarity."
+    "description": "Ran morning operations on cereal strategy and day planning.",
+    "story": "Led a morning operations summit focused on confronting the day ahead. With spoon in hand and milk prepared, the team reflected on the profound responsibility of cereal. Demonstrated that effective leadership requires patience, reflection, and occasionally a second serving."
   },
   {
-    "title": "A2: Exploratory Visual Analysis",
+    "title": "Bedtime Protocol",
     "year": 2023,
     "image": "/image/6.jpg",
-    "description": "A broad exploratory workflow to identify promising hypotheses before narrowing scope.",
-    "story": "I generated many more views than I could ever show in a final piece. Most were dead ends, but a few revealed patterns I would have missed otherwise. This project taught me to treat exploration as real work, not just a warm-up."
+    "description": "Established nighttime guard operations for safe sleep conditions.",
+    "story": "Assumed the role of nighttime guardian, positioned strategically by the pillow to monitor for suspicious vibes. Maintained a calm, round presence that ensured the human drifted safely to sleep, followed closely by the guardian who remained deeply committed to rest."
   },
   {
     "title": "Boss Mode: Command Center",
     "year": 2024,
     "image": "/image/7.jpg",
-    "description": "A boss-focused command center project about leading a chaotic team through deadlines and crises.",
-    "story": "This was the semester I discovered that being in charge is mostly solving tiny disasters all day. I handled deadlines, delegated tasks, and kept morale from collapsing before demos. By the end, I stopped trying to control everything and focused on making clear decisions fast."
+    "description": "Coordinated deadlines, delegation, and morale under semester pressure.",
+    "story": "Managed the operational chaos of a demanding semester by coordinating deadlines, delegating tasks, and stabilizing team morale ahead of key demos. Shifted leadership strategy from controlling every detail to making clear, timely decisions that kept progress moving."
   },
   {
     "title": "Arcade Strategy Analytics",
     "year": 2025,
     "image": "/image/8.jpg",
-    "description": "A video game analytics project tracking strategy, reaction time, and player decision patterns.",
-    "story": "I used my favorite video games as the dataset and tracked where players hesitated, rushed, and improvised. Watching repeated runs made strategy look less like luck and more like pattern recognition under pressure. It ended up being one of the most fun projects because every chart felt like replay analysis."
+    "description": "Used arcade run data to model decision-making under pressure.",
+    "story": "Analyzed gameplay patterns using arcade runs as a dataset to identify where players hesitated, rushed, or improvised. Repeated run analysis revealed that strong strategy often emerges from pattern recognition under pressure rather than luck."
   },
   {
     "title": "Operation Mallstorm",
     "year": 2026,
     "image": "/image/9.jpg",
-    "description": "A fictional operation planning a coordinated shopping mall invasion with a full plush army.",
-    "story": "The narrative framed the mall as contested territory and mapped how different squads moved through entrances, escalators, and food court chokepoints. I built timelines for each phase so the reader could follow the operation from first breach to full control. It was absurd on purpose, but it let me practice large-scale sequencing and spatial storytelling."
+    "description": "Built a phase-by-phase operations map for an intentionally absurd mall campaign.",
+    "story": "Developed a narrative operations map framing a shopping mall as contested territory. Tracked squad movement through entrances, escalators, and food court chokepoints while building a phase by phase timeline from first breach to full control. An intentionally absurd scenario that strengthened large scale sequencing and spatial storytelling skills."
   }
 ]

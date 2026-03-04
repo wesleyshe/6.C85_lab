@@ -1,0 +1,10 @@
+# Dependencies
+node_modules/
+
+# SvelteKit generated files (dev/build cache)
+.svelte-kit/
+build/
+
+# System/editor noise
+.DS_Store
+npm-debug.log*
