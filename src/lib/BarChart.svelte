@@ -204,7 +204,7 @@
 
   .chart-with-legend {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 1.5rem;
     flex-wrap: wrap;
   }
