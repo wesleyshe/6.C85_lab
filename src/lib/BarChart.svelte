@@ -78,8 +78,9 @@
     return { update(s) { d3.select(node).call(d3.axisBottom(s).tickFormat(d3.format("d"))); }};
   }
   function axisLeft(node, scale) {
-    d3.select(node).call(d3.axisLeft(scale).tickFormat(d3.format("d")));
-    return { update(s) { d3.select(node).call(d3.axisLeft(s).tickFormat(d3.format("d"))); }};
+    const maxVal = scale.domain()[1];
+    d3.select(node).call(d3.axisLeft(scale).ticks(maxVal).tickFormat(d3.format("d")));
+    return { update(s) { const m = s.domain()[1]; d3.select(node).call(d3.axisLeft(s).ticks(m).tickFormat(d3.format("d"))); }};
   }
   function axisBandBottom(node, scale) {
     d3.select(node).call(d3.axisBottom(scale));
