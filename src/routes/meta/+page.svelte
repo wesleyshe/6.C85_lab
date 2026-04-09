@@ -4,6 +4,7 @@
   import { base } from "$app/paths";
   import { computePosition, autoPlacement, offset } from '@floating-ui/dom';
   import BarChart from "$lib/BarChart.svelte";
+  import LineChart from "$lib/LineChart.svelte";
 
   let locData = [];
   let commits = [];
@@ -20,6 +21,9 @@
     width: width - margin.left - margin.right,
     height: height - margin.top - margin.bottom
   };
+
+  // SVG ref for brush
+  let svg;
 
   // Axis DOM refs
   let xAxis, yAxis, yAxisGridlines;
@@ -55,8 +59,35 @@
   let commitTooltip;
   let tooltipPosition = { x: 0, y: 0 };
 
+  // Brush selection
+  let brushSelection = null;
+
+  function isCommitBrushed(commit) {
+    if (!brushSelection) return false;
+    let min = { x: brushSelection[0][0], y: brushSelection[0][1] };
+    let max = { x: brushSelection[1][0], y: brushSelection[1][1] };
+    let x = xScale(commit.datetime);
+    let y = yScale(commit.hourFrac);
+    return x >= min.x && x <= max.x && y >= min.y && y <= max.y;
+  }
+
+  function brushed(evt) {
+    brushSelection = evt.selection;
+  }
+
+  $: {
+    d3.select(svg).call(d3.brush()
+      .extent([[usableArea.left, usableArea.top], [usableArea.right, usableArea.bottom]])
+      .on("start brush end", brushed));
+    d3.select(svg).selectAll(".dots, .overlay ~ *").raise();
+  }
+
+  $: brushedCommits = brushSelection ? commits.filter(isCommitBrushed) : [];
+
   // Click selection
   let clickedCommits = [];
+
+  $: selectedCommits = Array.from(new Set([...clickedCommits, ...brushedCommits]));
 
   async function dotInteraction(index, evt) {
     let hoveredDot = evt.target;
@@ -84,8 +115,8 @@
   }
 
   // Bar chart data: filter by selected commits
-  $: selectedLines = clickedCommits.length > 0
-    ? clickedCommits.flatMap(d => d.lines)
+  $: selectedLines = selectedCommits.length > 0
+    ? selectedCommits.flatMap(d => d.lines)
     : locData;
   $: selectedCounts = d3.rollup(selectedLines, v => v.length, d => d.type);
   $: allTypes = Array.from(new Set(locData.map(d => d.type)));
@@ -93,9 +124,28 @@
     label: String(type),
     value: selectedCounts.get(type) || 0
   }));
-  $: barTitle = clickedCommits.length > 0
-    ? `Language breakdown for ${clickedCommits.length} selected commit${clickedCommits.length > 1 ? 's' : ''}`
+  $: barTitle = selectedCommits.length > 0
+    ? `Lines of Code: ${selectedCommits.length} Selected Commit${selectedCommits.length > 1 ? 's' : ''}`
     : "Language breakdown for all commits";
+
+  // Line chart data: lines edited by date
+  let linesByDate = [];
+  $: {
+    const rolled = d3.rollups(
+      locData,
+      v => v.length,
+      d => d3.timeDay.floor(d.datetime)
+    ).map(([date, count]) => ({ date, count }));
+
+    const [minDate, maxDate] = d3.extent(rolled, d => d.date);
+    if (minDate && maxDate) {
+      const allDays = d3.timeDays(minDate, d3.timeDay.offset(maxDate, 1));
+      linesByDate = allDays.map(date => ({
+        date,
+        count: rolled.find(d => d.date.getTime() === date.getTime())?.count ?? 0
+      }));
+    }
+  }
 
   // Stats
   $: totalLOC = locData.length;
@@ -157,7 +207,7 @@
 
   <h2>Commits by time of day</h2>
 
-  <svg viewBox="0 0 {width} {height}">
+  <svg viewBox="0 0 {width} {height}" bind:this={svg}>
     <g class="gridlines" transform="translate({usableArea.left}, 0)" bind:this={yAxisGridlines} />
     <g class="dots">
       {#each commits as commit, index}
@@ -165,8 +215,8 @@
           cx={xScale(commit.datetime)}
           cy={yScale(commit.hourFrac)}
           r={rScale(commit.totalLines)}
-          style="fill: {clickedCommits.includes(commit) ? 'red' : 'steelblue'}"
-          class:selected={clickedCommits.includes(commit)}
+          style="fill: {selectedCommits.includes(commit) ? 'red' : 'steelblue'}"
+          class:selected={selectedCommits.includes(commit)}
           on:mouseenter={evt => dotInteraction(index, evt)}
           on:mouseleave={evt => dotInteraction(index, evt)}
           on:click={evt => dotInteraction(index, evt)}
@@ -206,6 +256,11 @@
     />
   {:else}
     <p>Loading code stats...</p>
+  {/if}
+
+  <h2>Commit activity</h2>
+  {#if linesByDate.length > 0}
+    <LineChart data={linesByDate} />
   {/if}
 </section>
 
@@ -293,6 +348,20 @@
     padding: 0.75em 1em;
     backdrop-filter: blur(4px);
     z-index: 10;
+  }
+
+  @keyframes marching-ants {
+    to {
+      stroke-dashoffset: -8;
+    }
+  }
+
+  svg :global(.selection) {
+    fill-opacity: 10%;
+    stroke: black;
+    stroke-opacity: 70%;
+    stroke-dasharray: 5 3;
+    animation: marching-ants 2s linear infinite;
   }
 
   @media (prefers-color-scheme: dark) {
