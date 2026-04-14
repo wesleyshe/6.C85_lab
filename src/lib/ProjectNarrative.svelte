@@ -18,21 +18,29 @@
     {#each sorted_projects as project}
       <section class="step">
         <div class="step-content">
-          <h3>{project.year}: {project.title}</h3>
+          <h3>{project.year}: {#if project.url}<a href={project.url} target="_blank" rel="noopener noreferrer">{project.title}</a>{:else}{project.title}{/if}</h3>
           <p>{project.story}</p>
+          {#if project.url}
+            <a class="link" href={project.url} target="_blank" rel="noopener noreferrer">link</a>
+          {/if}
         </div>
       </section>
     {/each}
 
     <svelte:fragment slot="viz">
       {#if sorted_projects.length}
+        {@const active = sorted_projects[activeProjectIdx]}
         <div class="project-detail">
-          <h3>{sorted_projects[activeProjectIdx].year}</h3>
-          <img
-            src="{base}{sorted_projects[activeProjectIdx].image}"
-            alt={sorted_projects[activeProjectIdx].title}
-          />
-          <p>{sorted_projects[activeProjectIdx].title}</p>
+          <h3>{active.year}</h3>
+          {#if active.url}
+            <a href={active.url} target="_blank" rel="noopener noreferrer">
+              <img src="{base}{active.image}" alt={active.title} />
+            </a>
+            <p><a href={active.url} target="_blank" rel="noopener noreferrer">{active.title}</a></p>
+          {:else}
+            <img src="{base}{active.image}" alt={active.title} />
+            <p>{active.title}</p>
+          {/if}
         </div>
       {/if}
     </svelte:fragment>
@@ -65,6 +73,11 @@
 
   .step-content p {
     margin: 0;
+  }
+
+  .step-content .link {
+    display: inline-block;
+    margin-top: 0.5em;
   }
 
   .project-detail {

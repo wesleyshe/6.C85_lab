@@ -61,5 +61,13 @@
     "image": "/image/9.jpg",
     "description": "Built a phase-by-phase operations map for an intentionally absurd mall campaign.",
     "story": "Developed a narrative operations map framing a shopping mall as contested territory. Tracked squad movement through entrances, escalators, and food court chokepoints while building a phase by phase timeline from first breach to full control. An intentionally absurd scenario that strengthened large scale sequencing and spatial storytelling skills."
+  },
+  {
+    "title": "Geospatial Visualizations",
+    "year": 2026,
+    "image": "/image/BikeWatch.png",
+    "description": "BikeWatch is an interactive map that visualizes bike-sharing activity across Boston and Cambridge. It shows where people are picking up and dropping off BlueBikes throughout the day, with larger circles indicating busier stations and colors showing whether a station has more departures or arrivals.",
+    "story": "BikeWatch is an interactive map that visualizes bike-sharing activity across Boston and Cambridge. It shows where people are picking up and dropping off BlueBikes throughout the day, with larger circles indicating busier stations and colors showing whether a station has more departures or arrivals.",
+    "url": "https://wesleyshe.github.io/6.C85_lab_bikeWatch/"
   }
 ]

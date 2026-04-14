@@ -4,12 +4,27 @@
 </script>
 
 <article>
-    <img src="{base}{data.image}" alt={data.title} />
-    <h3>{data.title}</h3>
+    {#if data.url}
+        <a href={data.url} target="_blank" rel="noopener noreferrer">
+            <img src="{base}{data.image}" alt={data.title} />
+        </a>
+    {:else}
+        <img src="{base}{data.image}" alt={data.title} />
+    {/if}
+    {#if data.url}
+        <h3><a href={data.url} target="_blank" rel="noopener noreferrer">{data.title}</a></h3>
+    {:else}
+        <h3>{data.title}</h3>
+    {/if}
     {#if data.year}
         <p class="year">{data.year}</p>
     {/if}
-    <p>{data.description}</p>
+    <div class="description">
+        <p>{data.description}</p>
+        {#if data.url}
+            <a class="link" href={data.url} target="_blank" rel="noopener noreferrer">link</a>
+        {/if}
+    </div>
 </article>
 
 <style>
@@ -29,13 +44,24 @@
         grid-row: 2;
         margin: 0;
     }
+    article h3 a {
+        color: inherit;
+        text-decoration: none;
+    }
+    article h3 a:hover {
+        text-decoration: underline;
+    }
     article .year {
         grid-row: 3;
         margin: 0;
         font-weight: 600;
         opacity: 0.85;
     }
-    article p:last-child {
+    .description {
         grid-row: 4;
+    }
+    .link {
+        display: inline-block;
+        margin-top: 0.5em;
     }
 </style>
